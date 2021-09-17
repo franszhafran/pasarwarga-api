@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+    db_pasar_warga:
+        image: mysql
+        container_name: db_pasar_warga
+        volumes:
+            - ./docker_database:/var/lib/mysql:rw
+        ports:
+            - "3309:3306"
+        environment:  
+            MYSQL_ROOT_PASSWORD: 654321
+            MYSQL_DATABASE: pasarwarga_article
