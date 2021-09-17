@@ -1,6 +1,7 @@
 package article
 
 import (
+	"errors"
 	"fmt"
 	"pasarwarga-service-api/database"
 	"pasarwarga-service-api/src/models"
@@ -43,6 +44,19 @@ func categorySearch(name_to_search string) []int {
 	return returnDump
 }
 
+// checkCategory is a function to check if a category_id is exist
+func checkCategory(category_id int) bool {
+	// db conn
+	db := database.GetConnection()
+
+	// prepare
+	var category models.Category
+
+	// query and parse
+	result := db.Find(&category, category_id)
+	return result.RowsAffected == 1
+}
+
 // Get article by its' id
 func Get(article_id int) (models.Article, error) {
 	// conn
@@ -55,6 +69,11 @@ func Get(article_id int) (models.Article, error) {
 
 // Store new article
 func Store(title string, category_id int, content string) (models.Article, error) {
+	// check input
+	if !checkCategory(category_id) {
+		return models.Article{}, errors.New("invalid category_id")
+	}
+
 	// conn
 	db := database.GetConnection()
 
@@ -62,6 +81,7 @@ func Store(title string, category_id int, content string) (models.Article, error
 	article := models.Article{
 		Title:      title,
 		CategoryID: category_id,
+		Slug:       slug.Make(title),
 		Content:    content,
 	}
 
@@ -71,6 +91,11 @@ func Store(title string, category_id int, content string) (models.Article, error
 
 // Update article entity
 func Update(article_id int, title string, category_id int, content string) (models.Article, error) {
+	// check input
+	if !checkCategory(category_id) {
+		return models.Article{}, errors.New("invalid category_id")
+	}
+
 	// conn
 	db := database.GetConnection()
 
