@@ -54,7 +54,7 @@ func Edit(c *gin.Context) {
 		panic(err)
 	}
 
-	article_id, err := strconv.Atoi(c.PostForm("article_id"))
+	article_id, err := strconv.Atoi(c.PostForm("id"))
 	if err != nil {
 		panic(err)
 	}
