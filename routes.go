@@ -13,7 +13,7 @@ func initRoutes(r *gin.Engine) {
 		articleGroup.GET("/", article.Index)
 		articleGroup.GET("/:article_id", article.Show)
 		articleGroup.POST("/", article.Store)
-		articleGroup.DELETE("/", article.Destroy)
+		articleGroup.DELETE("/:article_id", article.Destroy)
 		articleGroup.PATCH("/", article.Edit)
 	}
 
