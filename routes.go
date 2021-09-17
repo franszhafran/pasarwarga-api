@@ -1,20 +1,24 @@
 package main
 
-import "github.com/gin-gonic/gin"
-import "pasarwarga-service-api/src/controllers/article"
+import (
+	"pasarwarga-service-api/src/controllers/article"
+	"pasarwarga-service-api/src/controllers/category"
+
+	"github.com/gin-gonic/gin"
+)
 
 func initRoutes(r *gin.Engine) {
 	articleGroup := r.Group("/article")
 	{
 		articleGroup.GET("/", article.Index)
-		// articleGroup.POST("/submit", submitEndpoint)
-		// articleGroup.POST("/read", readEndpoint)
 	}
 
-	// categoryGroup := r.Group("/category")
-	// {
-	// 	categoryGroup.POST("/login", loginEndpoint)
-	// 	categoryGroup.POST("/submit", submitEndpoint)
-	// 	categoryGroup.POST("/read", readEndpoint)
-	// }
+	categoryGroup := r.Group("/category")
+	{
+		categoryGroup.GET("/", category.Index)
+		categoryGroup.GET("/:category_id", category.Show)
+		categoryGroup.POST("/", category.Store)
+		categoryGroup.DELETE("/", category.Destroy)
+		categoryGroup.PATCH("/", category.Edit)
+	}
 }
