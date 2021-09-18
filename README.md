@@ -1,5 +1,7 @@
 # Pasar Warga Backend Test
 
+PasarWarga.postman_collection.json contains collection of endpoints
+
 ## Migrate schema
 1. Run ```docker-compose up -d```
 2. Run ```go build``` to build executable
